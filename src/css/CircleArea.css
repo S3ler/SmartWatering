@@ -1,0 +1,22 @@
+.circlearea{
+}
+
+.circleareaboundary {
+    fill: #607D8B;
+}
+.circlearea > .outline {
+    fill: #009688;
+}
+.circleareaoutline > * {
+    fill: none;
+    stroke:  #80cbc4;
+    stroke-width: 10;
+}
+
+.circleareaname {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 160px;
+    color: white;
+    filter: drop-shadow( 0px 0px 20px #9E9E9E );
+
+}

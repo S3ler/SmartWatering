@@ -1,0 +1,23 @@
+
+Color schemes
+https://material.google.com/style/color.html#color-color-palette
+
+Primary color               #     // 500
+Secondary color             #     // 100
+Accent color                #     // 500
+Text and background colors  #     // 900
+
+CircleArea:
+Green
+Primary color               #4caf50
+Secondary color             #c8e6c9
+Accent color                #4caf50
+Text and background colors  #1b5e20
+
+
+TemporaryWaterPosition
+Blue
+Primary color               #2196f3
+Secondary color             #bbdefb
+Accent color                #2196f3
+Text and background colors  #1976d2

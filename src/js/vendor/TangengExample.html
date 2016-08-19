@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <!doctype html>
+        <head>
+            <meta charset="utf-8">
+            <title></title>
+            <meta name="description" content="">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        </head>
+<body>
+<svg height="300" width="300" id="map">
+    <circle id="m1" cx="70" cy="50" r="30" stroke="black" stroke-width="3" fill="red"/>
+    <circle id="m2" cx="150" cy="210" r="80" stroke="black" stroke-width="3" fill="red"/>
+
+
+    <circle cx="70" cy="50" r="1" stroke="black" stroke-width="2" fill="black"/>
+    <circle cx="150" cy="210" r="1" stroke="black" stroke-width="2" fill="black"/>
+
+    <line x1="70" y1="50" x2="150" y2="210" stroke="black" stroke-width="1" fill="red"/>
+
+    <!--<line fill="red" stroke-width="2" stroke="black" y1="67.87135122736768" x1="67.85179020855425" y2="227.87135122736768" x2="147.85179020855426"></line>
+   <line fill="red" stroke-width="2" stroke="black" y1="32.12864877263232" x1="67.85179020855425" y2="160.35735770175643" x2="144.03275057931737"></line>
+
+
+    <line fill="red" stroke-width="2" stroke="black" y1="66.85084835361388" x1="76.32842079538867" y2="256.80791209337195" x2="167.5789466538574"/> -->
+</svg>
+<script>
+    window.onload = createTangentLines;
+
+    function addPoint(x, y) {
+        var map = document.getElementById("map");
+        var pt = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+        pt.setAttribute('cy', y);
+        pt.setAttribute('cx', x);
+        pt.setAttribute('r', "2");
+        pt.setAttribute('stroke', "yellow");
+        pt.setAttribute('stroke-width', "2");
+        pt.setAttribute('fill', "yellow");
+        map.appendChild(pt);
+    }
+
+    function addLine(x1, y1, x2, y2) {
+        var map = document.getElementById("map");
+
+        var line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('stroke', "yellow");
+        line.setAttribute('stroke-width', "1");
+        line.setAttribute('fill', "yellow");
+        addPoint(x2, y2);
+        map.appendChild(line);
+    }
+    function createTangentLines() {
+        // TODO check if m1 in m2
+        var m1 = document.getElementById('m1');
+        var m2 = document.getElementById('m2');
+
+        m1.x = parseFloat(m1.getAttribute("cx")); //- parseFloat(m1.getAttribute("r")) * 0.5;
+        m1.y = parseFloat(m1.getAttribute("cy"));// - parseFloat(m1.getAttribute("r")) * 0.5;
+        m2.x = parseFloat(m2.getAttribute("cx")); //- parseFloat(m2.getAttribute("r")) * 0.5;
+        m2.y = parseFloat(m2.getAttribute("cy"));// - parseFloat(m2.getAttribute("r")) * 0.5;
+
+        // addPoint(m2.x, m2.y);
+        // addPoint(m1.x, m1.y);
+
+        if (m1.getAttribute("r") > m2.getAttribute("r")) {
+            var tmp = m1;
+            m1 = m2;
+            m2 = tmp;
+            // m1 is always the circle with the smaller radius
+        }
+        var v_r = {
+            x: undefined,
+            y: undefined,
+            length: Math.abs(parseFloat(m2.getAttribute("r")) - parseFloat(m1.getAttribute("r")))
+        };
+
+        var v_m1 = {
+            x: m1.x,
+            y: m1.y,
+            length: Math.sqrt(Math.pow(m1.x, 2) + Math.pow(m1.y, 2))
+        };
+
+        var v_m2 = {
+            x: m2.x,
+            y: m2.y,
+            length: Math.sqrt(Math.pow(m2.x, 2) + Math.pow(m2.y, 2))
+        };
+        var v_m1m2 = {
+            x: v_m2.x - v_m1.x,
+            y: v_m2.y - v_m1.y,
+            length: Math.sqrt(Math.pow(v_m2.x - v_m1.x, 2) + Math.pow(v_m2.y - v_m1.y, 2))
+        };
+
+
+        //addLine(m1.x, m1.y, m2.x, m2.y);addLine(m1.x, m1.y, v_m1m2.x+v_m1.x, v_m1m2.y+v_m1.y);
+
+
+        var alpha = Math.asin(v_r.length / v_m1m2.length); //  * 180 / Math.PI
+        var k = v_r.length / v_m1m2.length;
+        v_m1m2.x *= k;
+        v_m1m2.y *= k;
+        v_m1m2.length =
+            Math.sqrt(Math.pow(v_m1m2.x, 2) + Math.pow(v_m1m2.y, 2));
+
+
+        var v_m2t1 = {
+            x: v_m1m2.x * Math.cos(-Math.PI * 0.5 -alpha) - v_m1m2.y * Math.sin(-Math.PI * 0.5 -alpha),
+            y: v_m1m2.x * Math.sin(-Math.PI * 0.5 -alpha) + v_m1m2.y * Math.cos(-Math.PI * 0.5 -alpha),
+            length: v_m1m2.length
+        };
+
+        //addLine(m2.x, m2.y, v_m2t1.x + v_m2.x, v_m2t1.y + v_m2.y);
+
+
+        var v_m2t2 = {
+            x: (-1) * v_m2t1.x * Math.cos(2*alpha) - (-1) * v_m2t1.y * Math.sin(2*alpha),
+            y: (-1) * v_m2t1.x * Math.sin(2*alpha) + (-1) * v_m2t1.y * Math.cos(2*alpha),
+            length: v_m1m2.length
+        };
+
+
+        //addLine(m2.x, m2.y, v_m2t2.x + v_m2.x, v_m2t2.y + v_m2.y);
+
+        k = parseFloat(m1.getAttribute("r")) / v_m2t1.length;
+        v_m2t1.x *= k;
+        v_m2t1.y *= k;
+        v_m2t1.length =
+            Math.sqrt(Math.pow(v_m2t1.x, 2) + Math.pow(v_m2t1.y, 2));
+
+        //addLine(m1.x, m1.y, v_m2t1.x+v_m1.x, v_m2t1.y+v_m1.y);
+
+        var v_m1t1 = {
+            x: v_m2t1.x,
+            y: v_m2t1.y
+        };
+
+        // tangente m1
+        addLine(m1.x, m1.y, v_m1t1.x + v_m1.x, v_m1t1.y + v_m1.y);
+
+        var v_m1t2 = {
+            x: (-1) * v_m1t1.x * Math.cos(2*alpha) - (-1) * v_m1t1.y * Math.sin(2*alpha),
+            y: (-1) * v_m1t1.x * Math.sin(2*alpha) + (-1) * v_m1t1.y * Math.cos(2*alpha)
+        };
+
+        // Tangente m1
+        addLine(m1.x, m1.y, v_m1t2.x + v_m1.x, v_m1t2.y + v_m1.y);
+
+        k = parseFloat(m2.getAttribute("r")) / v_m2t1.length;
+        v_m2t1.x *= k;
+        v_m2t1.y *= k;
+        addLine(m2.x, m2.y, v_m2t1.x + v_m2.x, v_m2t1.y + v_m2.y);
+
+        var p_m2t1 = {
+            x: v_m2t1.x + m2.x,
+            y: v_m2t1.y + m2.y
+        };
+
+        k = parseFloat(m2.getAttribute("r")) / v_m2t2.length;
+        v_m2t2.x *= k;
+        v_m2t2.y *= k;
+        addLine(m2.x, m2.y, v_m2t2.x + v_m2.x, v_m2t2.y + v_m2.y);
+
+        var p_m2t2 = {
+            x: v_m2t2.x + m2.x,
+            y: v_m2t2.y + m2.y
+        };
+
+        var p_m1t1 = {
+            x: v_m1t1.x + m1.x,
+            y: v_m1t1.y + m1.y
+        };
+        var p_m1t2 = {
+            x: v_m1t2.x + m1.x,
+            y: v_m1t2.y + m1.y
+        };
+
+        var l_t1 = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+
+        l_t1.setAttribute('x2', p_m2t1.x);
+        l_t1.setAttribute('y2', p_m2t1.y);
+        l_t1.setAttribute('x1', p_m1t1.x);
+        l_t1.setAttribute('y1', p_m1t1.y);
+        l_t1.setAttribute('stroke', "black");
+        l_t1.setAttribute('stroke-width', "2");
+        l_t1.setAttribute('fill', "red");
+
+
+        var l_t2 = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+
+        l_t2.setAttribute('x2', p_m2t2.x);
+        l_t2.setAttribute('y2', p_m2t2.y);
+        l_t2.setAttribute('x1', p_m1t2.x);
+        l_t2.setAttribute('y1', p_m1t2.y);
+        l_t2.setAttribute('stroke', "black");
+        l_t2.setAttribute('stroke-width', "2");
+        l_t2.setAttribute('fill', "red");
+
+
+        var map = document.getElementById("map");
+        map.appendChild(l_t1);
+        map.appendChild(l_t2);
+    }
+</script>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

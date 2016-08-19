@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <!doctype html>
+        <head>
+            <meta charset="utf-8">
+            <title></title>
+            <meta name="description" content="">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <script src="graham_scan.js"></script>
+            <script src="areapolygon.js"></script>
+            <script src="sylvester/sylvester.js"></script>
+        </head>
+<body>
+<svg height="1500" width="1500" id="map">
+
+    <g id="circles">
+        <circle id="m1" cx="70" cy="50" r="20" stroke="black" stroke-width="1" fill="white"/>
+
+        <circle id="m2" cx="150" cy="210" r="20" stroke="black" stroke-width="1" fill="white"/>
+
+        <circle id="m3" cx="210" cy="90" r="20" stroke="black" stroke-width="1" fill="white"/>
+
+s        <circle id="m4" cx="450" cy="140" r="20" stroke="black" stroke-width="1" fill="white"/>
+        <!-- wenn m4 niedriger auf: x400 y140 ausprobieren -->
+
+        <circle id="m5" cx="450" cy="250" r="20" stroke="black" stroke-width="1" fill="white"/>
+
+        <circle id="m6" cx="350" cy="350" r="20" stroke="black" stroke-width="1" fill="white"/>
+
+        <circle id="m7" cx="200" cy="380" r="20" stroke="black" stroke-width="1" fill="white"/>
+
+        <circle id="m8" cx="80" cy="340" r="20" stroke="black" stroke-width="1" fill="white"/>
+    </g>
+
+</svg>
+<script>
+    window.onload = function () {
+
+        var map = document.getElementById("map");
+        var g = document.getElementById('circles');
+        var circles = g.getElementsByTagName('circle');
+
+        var tmp;
+        var area;
+        var areas = new Array();
+        var i;
+        for (i = 0; i < circles.length; i++) {
+            tmp = circles[i];
+            // circles[i].setAttribute("display", "none");
+            // circles[i].removeAttribute("display");
+            area = {
+                x: parseFloat(tmp.getAttribute("cx")),
+                y: parseFloat(tmp.getAttribute("cy")),
+                r: parseFloat(tmp.getAttribute("r"))
+            };
+            areas.push(area);
+        }
+        var tangents = calculateAreaPolygon(areas);
+        tangents.forEach(function (el) { map.appendChild(el);  });
+
+    };
+
+    function addPoint(x, y) {
+        var map = document.getElementById("map");
+        var pt = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+        pt.setAttribute('cy', y);
+        pt.setAttribute('cx', x);
+        pt.setAttribute('r', "2");
+        pt.setAttribute('stroke', "orange");
+        pt.setAttribute('stroke-width', "1");
+        pt.setAttribute('fill', "orange");
+        map.appendChild(pt);
+    }
+
+    function addLine(x1, y1, x2, y2) {
+        var map = document.getElementById("map");
+
+        var line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('stroke', "grey");
+        line.setAttribute('stroke-width', "1");
+        line.setAttribute('fill', "yellow");
+        addPoint(x2, y2);
+        map.appendChild(line);
+    }
+</script>
+</body>
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="css/Waterer.css" type="text/css" rel="stylesheet">
+    <link href="css/MapBackground.css" type="text/css" rel="stylesheet">
+    <link href="css/Selection.css" type="text/css" rel="stylesheet">
+    <link href="css/CircleArea.css" type="text/css" rel="stylesheet">
+    <link href="css/CreateNewCircleAreaArea.css" type="text/css" rel="stylesheet">
+    <link href="css/TemporaryWaterPosition.css" type="text/css" rel="stylesheet">
+    <link href="css/InfoBox.css" type="text/css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+    <title>Smart Waterer</title>
+
+    <script src="js/NewMain.js"></script>
+
+
+    <script src="js/NewMVC/Model/MainModel.js"></script>
+
+
+    <script src="js/NewMVC/Controller/MainController.js"></script>
+    <script src="js/NewMVC/Controller/SingleCircleAreaSelectionController.js"></script>
+    <script src="js/NewMVC/Controller/SingleSelectionController.js"></script>
+    <script src="js/NewMVC/Controller/MultipleSelectionController.js"></script>
+    <script src="js/NewMVC/Controller/AddCircleAreaBoundarySelectionController.js"></script>
+    <script src="js/NewMVC/Controller/RemoveCircleAreaBoundarySelectionController.js"></script>
+
+
+    <script src="js/NewMVC/View/MainView.js"></script>
+    <script src="js/NewMVC/View/MapObjects/MapBackground/MapBackground.js"></script>
+    <script src="js/NewMVC/View/MapObjects/TemporaryWaterPosition/TemporaryWaterPosition.js"></script>
+    <script src="js/NewMVC/View/MapObjects/TemporaryWaterPosition/TemporaryWaterPositionDialog.js"></script>
+    <script src="js/NewMVC/View/MapObjects/CreateNewCircleAreaArea/SimpleTempCircleArea.js"></script>
+    <script src="js/NewMVC/View/MapObjects/CreateNewCircleAreaArea/CreateNewCircleAreaAreaDialog.js"></script>
+    <script src="js/NewMVC/View/MapObjects/CircleArea/CircleArea.js"></script>
+    <script src="js/NewMVC/View/MapObjects/CircleArea/CircleAreaBoundary.js"></script>
+    <script src="js/NewMVC/View/MapObjects/CircleArea/CircleAreaDialog.js"></script>
+
+    <script src="js/NewMVC/View/MapObjects/Waterer/SVGWaterer.js"></script>
+
+
+    <script src="js/NewLogic/SmartWateringDataService.js"></script>
+    <script src="js/NewLogic/GIS.js"></script>
+
+    <script src="js/NewLogic/DataModel/Area.js"></script>
+    <script src="js/NewLogic/DataModel/Boundary.js"></script>
+    <script src="js/NewLogic/DataModel/Garden.js"></script>
+    <script src="js/NewLogic/DataModel/GeometricInconsistencyException.js"></script>
+    <script src="js/NewLogic/DataModel/SmartWateringException.js"></script>
+    <script src="js/NewLogic/DataModel/Waterer.js"></script>
+
+
+    <script src="js/NewLogic/DataModel/plant/Plant.js"></script>
+    <script src="js/NewLogic/DataModel/plant/PlantDatabase.js"></script>
+    <script src="js/NewLogic/DataModel/plant/PlantDatabaseException.js"></script>
+
+
+    <script src="js/vendor/sylvester/sylvester.js"></script>
+</head>
+<body ondragstart="return false;" ondrop="return false;">
+<script type="text/javascript">
+    window.onload = main;
+</script>
+<div id="svg_map_container">
+
+</div>
+</body>
+</html>

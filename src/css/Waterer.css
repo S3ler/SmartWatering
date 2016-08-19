@@ -1,0 +1,16 @@
+#watererOutline {
+    fill: #607D8B;
+}
+
+.watererDistance {
+    fill: none;
+    stroke: black;
+    stroke-width: 5;
+    stroke-dasharray: 200;
+}
+
+.watererDistanceDescription {
+    fill: black;
+    font-size: 100px;
+    text-anchor: middle;
+}

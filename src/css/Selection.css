@@ -1,0 +1,19 @@
+
+.TemporaryWaterPosition.selected{
+    fill: #B2DFDB;
+}
+
+.circlearea > .outline.selected {
+    fill: #009688;
+    stroke-width: 0px;
+}
+
+
+.circleareaboundary.selected {
+    fill: #B2DFDB;
+}
+
+.selected {
+    stroke-width: 0px;
+    stroke: none;
+}
